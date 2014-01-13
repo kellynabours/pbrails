@@ -1,0 +1,219 @@
+<div id="menubar" class="greyborder">
+	<ul>
+		<li id="product_delete"  class="last"><img src="/images/menu_delete.png"><span>Delete</span></li>
+		<li id="product_changelog" ><img src="/images/menu_report.png"><span>Changelog</span></li>
+		<li id="products_save" ><img src="/images/menu_save.png"><span>Save</span></li>
+	</ul>
+</div>
+<div id="main">
+	<%= form_tag do %>
+  <input id="controller_type" type="hidden" name="controller_type" value="product">
+
+
+   <div id="left">
+	<input id="id" type="hidden" name="id" value="<%= @product.id if !@product.nil?%>"><br>
+	<div id="save_errors" style="color:red; width:100%; text-align: center; font-size:16px;"></div>
+
+
+	<div class="input twocolumn">
+		<label for="name">Name</label> 
+		<input id="product_name" name="product[name]" value="<%=@product.name if !@product.nil?%>">
+                <label for="volumenumber">Volume Number</label>
+                <input id="product_volume_number" name="product[volume_number]" value="<%=@product.volume_number if !@product.nil?%>">
+	</div>
+	<div class="input onecolumn">
+                <label for="product_short_description">Short Description</label>
+                <input id="product_short_description" name="product[short_description]" value="<%=@product.short_description if !@product.nil?%>">
+	</div>
+	<div class="input twocolumn">
+                <label for="product_subtitle">Subtitle</label>
+                <input id="product_subtitle" name="product[subtitle]" value="<%=@product.subtitle if !@product.nil?%>">
+		<label for="product_parent_id">Series</label> 
+		<%= collection_select("product","series_id", Series.order("name"), :id, :name) %>
+	</div>
+	<div class="input onecolumn">
+                <label for="product_description">Product Description</label>
+		<textarea id="product_description" name="product[product_description]"><%=@product.product_description if !@product.nil?%></textarea>
+	</div>
+	<div class="input onecolumn">
+                <label for="product_print_extras">Print Extras</label>
+		<textarea id="product_print_extras" name="product[product_print_extras]"><%=@product.print_extras if !@product.nil?%></textarea>
+	</div>
+
+	<div id="tabs">
+          	<ul>
+	            	<li><a href="#tabs-1"><em>Print Info</em></a></li>
+       			<li><a href="#tabs-2"><em>Digital Publishing</em></a></li>
+          	</ul>
+          	<div id="tabs-1">
+			<div class="input twocolumn">
+       		         <label for="product_isbn">ISBN</label>
+       		         <input id="product_isbn" name="product[isbn]" value="<%=@product.isbn if !@product.nil?%>" disabled>
+			</div>
+			<div class="input twocolumn">
+       		         <label for="product_isbn13">ISBN-13</label>
+       		         <input id="product_isbn13" name="product[isbn13]" value="<%=@product.isbn13 if !@product.nil?%>" disabled>
+			</div>
+			<div class="input twocolumn">
+       		         <label for="product_upc">UPC</label>
+       		         <input id="product_upc" name="product[upc]" value="<%=@product.upc if !@product.nil?%>" disabled>
+			</div>
+					<div class="input twocolumn">
+       			         <label for="product_cat_code">Cat. Code</label>
+       		         <input id="product_cat_code" name="product[cat_code]" value="<%=@product.cat_code if @product%>">
+			</div>
+			<div class="input twocolumn">
+       		         <label for="product_viz_ship_date">Printer Ship Date</label>
+       		         <input id="product_viz_ship_date" name="product[date_viz_ship]" value="<%=@product.date_viz_ship if !@product.nil?%>">
+       		         <label for="product_simon_ship_date">Simon Ship Date</label>
+       		         <input id="product_simon_ship_date" name="product[date_ss]" value="<%=@product.date_ss if !@product.nil?%>">
+			</div>
+			<div class="input twocolumn">
+       		         <label for="product_diamond_ship_date">Diamond Ship Date</label>
+       		         <input id="product_diamond_ship_date" name="product[date_diamond_ship]" value="<%=@product.date_diamond_ship if !@product.nil?%>">
+       		         <label for="product_street_date">Street Date</label>
+       		         <input id="product_street_date" name="product[date_street]" value="<%=@product.date_street if !@product.nil?%>">
+			</div>
+		
+			<div class="input twocolumn">
+       		         <label for="product_whv_order_due">WHV Order Due</label>
+       		         <input id="product_whv_order_due" name="product[whv_order_due]" value="<%=@product.whv_order_due if !@product.nil?%>">
+       		         <label for="product_whv_ship">WHV Ship</label>
+       			         <input id="product_whv_ship" name="product[whv_ship]" value="<%=@product.whv_ship if !@product.nil?%>">
+			</div>
+			<div class="input twocolumn">
+       		         <label for="product_whv_street_date">WHV Street Date</label>
+       		         <input id="product_whv_street_date" name="product[whv_street_date]" value="<%=@product.whv_street_date if !@product.nil?%>">
+			</div>
+			<div class="input twocolumn">
+       		         <label for="product_whv_FERT">WHV FERT</label>
+       		         <input id="product_whv_FERT" name="product[whv_fert]" value="<%=@product.whv_fert if !@product.nil?%>">
+       		         <label for="product_whv_vid_vers_num">WHV Vers Num </label>
+       		         <input id="product_whv_vid_vers_num" name="product[whv_vid_vers_num]" value="<%=@product.whv_vid_vers_num if !@product.nil?%>">
+			</div>
+			<div class="input onecolumn">
+				<label for="product_exclusivity_note">Exclusivity Note</label>
+				<textarea id="product_exclusivity_note" name="product[exclusivity_note]"><%=@product.exclusivity_note if !@product.nil?%></textarea>
+			</div>	
+		</div>
+		<div id="tabs-2">
+		</div>
+	</div>
+        
+   </div>
+
+   <div id="right" class="greybg" style="border:1px solid black" >
+	<!-- Should be  Format specific fields. -->
+	<div class="input rcolumn">
+		<label for="product_format_id">Format</label>
+		<%= collection_select("product","format_id", Format.all, :id, :name, {}, { onchange:"changeProductFormat()" } ) %>
+	</div>
+	<div class="input rcolumn">
+		<label for="product_brand_id">Brand</label>
+		<%= collection_select("product","brand_id", Brand.all, :id, :name) %>
+	</div>
+
+	<div class="input rcolumn">
+		<label for="product_publish_to_web">Publish To Web</label> 
+		<%= select_tag( 'product[publish_to_web]', options_for_select([['No','0'], ['Yes','1']], @product.publish_to_web)) %>
+	</div>
+
+ 	<%= render :partial => "formatprint" %>
+        <%= render :partial => "formatdigital" %>
+
+        <div class="input rcolumn datatablerow">
+                <label for="territorytable">Territories</label>
+                <%
+                        # need to collect data to show.
+                        datarows=[]
+                        @product.product_territory.each do | r|
+                                datarows << [ r.id,  r.territory.name, "<img src='/images/menu_delete.png' class='delete' width='16'>".html_safe() ]
+                        end
+                %>
+                <%= datatable(["Territory","" ], datarows, {:model=>"product_territory",:table_id=>"productterritorytable"} ) %>
+                <div id="productterritory_assign" class="add"> <img src="/images/menu_add.png"><span>Add Territory </span>
+                </div>
+        </div>
+
+	<div class="input rcolumn">
+		<label for="product_online_id">Online ID</label>
+		<input id="product_online_id" name="id" value="<%=@product.id %>" disabled>
+	</div>
+   </div>
+   
+  <% end %>
+</div>
+
+
+        <%= render :partial => "dialogs" %>
+
+
+<!-- UPDATE THE TAB BAR, since this is brought in by AJAX, dynamically alter the bar -->
+	<script>
+		$(function() { $("#tabs").tabs(); }); 
+  		$("#isbntable .dtbody .dttr").click(loadProductSearch);
+	</script>
+
+<script>
+function changeProductFormat() { 
+	format=$("#product_format_id").val();
+	$(".formattype").hide();
+	switch(format) { 
+		<% Format.all.each do |f| %> 
+		case "<%=f.id%>": $(".format<%=f.category%>").show(); break; 
+		<% end %>
+	}
+}
+
+
+$("#tabsbar li").removeClass("selected");
+$("#tabsbar li.product").removeClass("greyed");
+$("#tabsbar li.product").addClass("selected");
+$("#tabsbar li.product a").off("click").click(function() { loadItem("product",<%=@product.id%>);});
+setup_datatables();
+$("#product_delete").off("click").click(general_delete);
+$("#product_save").off("click").click(general_save);
+$("#product_changelog").off("click").click(general_changelog);
+changeProductFormat();
+/* DATE PICKER SETUPS */
+$("#product_viz_ship_date").datepicker( { dateFormat: "yy-mm-dd" } );
+$("#product_simon_ship_date").datepicker( { dateFormat: "yy-mm-dd"});
+$("#product_street_date").datepicker( { dateFormat: "yy-mm-dd", onSelect: function(datetext,obj) { 
+	datesplit=datetext.split("-");
+	dateobj=new Date(datesplit[0],datesplit[1]-1,datesplit[2],0,0,0,0);
+	simondate=new Date(dateobj-22*24*60*60*1000);
+	printerdate=new Date(dateobj-56*24*60*60*1000);
+	$("#product_viz_ship_date").val(printerdate.getFullYear()+"-"+(printerdate.getMonth()+1)+"-"+printerdate.getDate());
+	$("#product_simon_ship_date").val(simondate.getFullYear()+"-"+(simondate.getMonth()+1)+"-"+simondate.getDate());
+}  }  );
+$("#product_diamond_ship_date").datepicker( { dateFormat: "yy-mm-dd"});
+$("#product_whv_order_due").datepicker({dateFormat:"yy-mm-dd"});
+$("#product_whv_ship").datepicker({dateFormat:"yy-mm-dd"});
+$("#product_whv_street_date").datepicker({dateFormat:"yy-mm-dd",onSelect: function(datetext,obj) { 
+	datesplit=datetext.split("-");
+	dateobj=new Date(datesplit[0],datesplit[1]-1,datesplit[2],0,0,0,0);
+	orderdue=new Date(dateobj-35*24*60*60*1000);
+	shipdate=new Date(dateobj-21*24*60*60*1000);
+	$("#product_whv_order_due").val(orderdue.getFullYear()+"-"+(orderdue.getMonth()+1)+"-"+orderdue.getDate());
+	$("#product_whv_ship").val(shipdate.getFullYear()+"-"+(shipdate.getMonth()+1)+"-"+shipdate.getDate());
+} } );
+/* **** */
+
+</script>
+
+<script>
+
+
+    $(document).ready(function() {
+       if ($('textarea').length > 0) {
+         var data = $('textarea');
+         $.each(data, function(i) {
+ 	   if (CKEDITOR.instances[data[i].id]) { delete CKEDITOR.instances[data[i].id]; }
+           CKEDITOR.replace(data[i].id);
+         });
+       }
+    });
+
+</script>
+
+

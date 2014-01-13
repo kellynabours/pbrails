@@ -1,0 +1,11 @@
+<% even=false %>
+<table>
+<th>Name</th>
+<% @returns.each do |r| 
+     classstr="even" if even
+     classstr="odd" if !even
+     even=!even
+%>
+  <tr model_id='<%= r[0] %>' class="<%=classstr%> result"><td><%=r[1]%></td></tr>
+<% end %>
+</table>

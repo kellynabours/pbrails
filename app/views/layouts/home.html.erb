@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meat http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Pb</title>
+  <%= stylesheet_link_tag :all %>
+  <%= csrf_meta_tag %>
+  <%= javascript_include_tag "jquery/jquery-1.9.0" %>
+  <%= javascript_include_tag "jquery/jquery-ui-1.10.0.custom.min" %>
+  <%= javascript_include_tag "resize" %>
+  <%= javascript_include_tag "search" %>
+  <%= javascript_include_tag "buttons" %>
+  <%= javascript_include_tag "datatable" %>
+ <script src="/ckeditor/ckeditor.js"></script>
+ <script src="/ckeditor/lang/en.js"></script>
+ <script src="/ckeditor/config.js"></script>
+  <script>
+	$.datepicker.formatDate( "yy-mm-dd", new Date( 2010, 1 - 1, 26 ) );
+  </script>
+
+</head>
+<body>
+<%= render :partial => "/shared/header" %>
+<%= render :partial => "/shared/searchbar" %>
+<div id="middle">
+<%= render :partial => "/shared/tabs" %>
+<div id="mainbody">
+<%= yield %>
+</div>
+</div>
+</body>
+</html>

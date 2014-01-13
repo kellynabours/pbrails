@@ -1,0 +1,68 @@
+
+  <div id="dialog-newproperty" title="New Property">  <div id="new_errors" class="color: red"></div>
+  <div class="input"><label for="title">Title</label> <input name="newproperty_title" id="newproperty_t
+itle" value=""></div>
+  </div>
+
+  <div id="dialog-newseries" title="New Series">    <div id="new_errors" class="color: red"></div>
+    <div class="input"><label for="title">Title</label> <input name="newseries_title" id="newseries_tit
+le" value=""></div>
+  </div>
+
+<script>
+     $("#dialog-newseries").dialog( {
+                autoOpen: false,
+                width:400,
+                buttons: [
+                        {
+                                text: "Done",
+                                click: function() {
+                                        $(this).dialog('close');
+                                        $.ajax("/series/new", {
+                                                data: {
+                                                        series_title: $("#newseries_title").val() ,
+                                                        property_id: $("#id").val()
+                                                } ,
+                                                error: function(jqXHR, textStatus, errorThrown) {
+                                                        $("#new_errors").html(jqXHR.responseText);
+                                                        $(this).dialog('open');
+                                                } ,
+                                                success: function(data,textStatus,jqXHR) {
+                                                        $("#new_errors").html("");
+                                                        $("#mainbody").html(data);
+                                                        menubar_buttons();
+                                                }
+                                        });
+                                }
+                        },
+                        { text:"Cancel", click: function() { $(this).dialog("close"); } }
+                ]
+        });
+
+        $("#dialog-newproperty").dialog( {
+                autoOpen: false,
+                width:400,
+                buttons: [
+                        {
+                                text: "Done",
+                                click: function() {
+                                        $(this).dialog('close');
+                                        $.ajax("/property/new", {
+                                                data: { title: $("#newproperty_title").val() } ,
+                                                error: function(jqXHR, textStatus, errorThrown) {
+                                                        $("#new_errors").html(jqXHR.responseText);
+                                                        $(this).dialog('open');
+                                                } ,
+                                                success: function(data,textStatus,jqXHR) {
+                                                        $("#new_errors").html("");
+                                                        $("#mainbody").html(data);
+                                                        menubar_buttons();
+                                                }
+                                        });
+                                }
+                        },
+                        { text:"Cancel", click: function() { $(this).dialog("close"); } }
+                ]
+        });
+</script>
+

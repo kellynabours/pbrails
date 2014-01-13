@@ -1,0 +1,61 @@
+
+
+<div class="formattype formatPRINT">
+	<div class="input rcolumn">
+		<label for="name">Total # Volumes</label> 
+		<input id="series_number_volumnes" name="series[number_volumes]" value="<%=@series.number_volumes %>" maxlength=10>
+	</div>
+	<div class="input rcolumn">
+		<label for="series_original_publisher">Original Publisher</label> 
+		<input id="series_original_publisher" name="series[original_publisher]" value="<%=@series.original_publisher %>" maxlength=50>
+	</div>
+	<div class="input rcolumn">
+		<label for="series_original_publisher">Series Status</label> 
+		<%= select_tag( 'series[series_status]', options_for_select([['' , ''], ['Ongoing', 'Ongoing'], ['Finished','Finished'], ['O.S.I.' , 'O.S.I.'], ['Out-of-Print' , 'Out-of-Print'],['Contract terminated','Contact terminated']], @series.series_status)) %>
+	</div>
+	<div class="input rcolumn">
+		<label for="series_orientation">Orientation</label>
+		<%= select_tag( 'series[orientation]', options_for_select([['',''],['LtoR','LtoR'], ['RtoL','RtoL'],['N/A','N/A']], @series.orientation)) %>
+	</div>
+	<div class="input rcolumn">
+		<label for="series_rating_id">Default Rating</label>
+		<%= collection_select("series","rating_id", Rating.all, :id, :name) %>
+	</div>
+	<div class="input rcolumn">
+		<label for="series_priority">Priority</label> 
+		<%= select_tag( 'series[priority]', options_for_select([['',''],['A','A'], ['B','B'],['C','C'],['D','D']], @series.priority)) %>
+	</div>
+	<div class="input rcolumn datatablerow">
+		 <label for="genretable">Genre</label>
+                <% datarows=[] 
+		  @series.series_genre.each do | b| 
+			datarows << [ b.id,  b.genre.name, "<img src='/images/menu_delete.png' class='delete' width='16'>".html_safe() ]
+		  end	
+		%>
+                <%= datatable(["Genre","" ], datarows, {:model=>"series_genre"} ) %>
+                <div id="genre_assign" class="add"> <img src="/images/menu_add.png"><span>Add Genre</span> </div>
+	</div>
+	<div class="input rcolumn datatablerow">
+		 <label for="bisactable">Bisac</label>
+                <% datarows=[] 
+		  @series.series_bisac.each do | b| 
+			datarows << [ b.id,  b.bisac.description, "<img src='/images/menu_delete.png' class='delete' width='16'>".html_safe() ]
+		  end	
+		%>
+                <%= datatable(["Bisac Code","" ], datarows, {:model=>"series_bisac"} ) %>
+                <div id="bisac_assign" class="add"> <img src="/images/menu_add.png"><span>Add Bisac Code</span> </div>
+	</div>
+	<div class="input rcolumn">
+		<label for="series_orientation_id">Cover</label>
+		<%= select_tag( 'series[cover]', options_for_select([['',''],['soft','soft'], ['hard','hard']], @series.cover)) %>
+	</div>
+	<div class="input rcolumn">
+		<label for="series_release_frequency">Release Frequency</label> 
+		<input id="series_release_frequency" name="series[release_frequency]" value="<%=@series.release_frequency %>" maxlength=200>
+	</div>
+	<div class="input rcolumn">
+		<label for="series_product_trimsize_id">Trimsize</label>
+		<%= collection_select("series","product_trimsize_id", ProductTrimsize.all, :id, :name) %>
+	</div>
+</div>
+

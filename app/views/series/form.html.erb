@@ -1,0 +1,180 @@
+<div id="menubar" class="greyborder">
+	<ul>
+		<li id="series_delete"  class="last"><img src="/images/menu_delete.png"><span>Delete</span></li>
+		<li id="series_changelog" ><img src="/images/menu_report.png"><span>Changelog</span></li>
+		<li id="series_save" ><img src="/images/menu_save.png"><span>Save</span></li>
+	</ul>
+</div>
+<div id="main">
+	<%= form_tag do %>
+  <input id="controller_type" type="hidden" name="controller_type" value="series">
+
+
+   <div id="left">
+	<input id="id" type="hidden" name="id" value="<%= @series.id if !@series.nil?%>"><br>
+	<div id="save_errors" style="color:red; width:100%; text-align: center; font-size:16px;"></div>
+
+
+	<div class="input twocolumn">
+		<label for="name">Name</label> 
+		<input id="series_name" name="series[name]" value="<%=@series.name if !@series.nil?%>">
+		<label for="series_parent_id">Property</label> 
+		<%= collection_select("series","property_id", Property.order("title"), :id, :title) %>
+	</div>
+
+	<div class="input twocolumn">
+		<label for="series_licensor_id">Licensor</label>
+		<%= collection_select("series","licensor_id", Licensor.all, :id, :name) %>
+	</div>
+	<div class="input twocolumn">
+	</div>
+	<div class="input onecolumn">
+		<label for="series_synopsis">Marketing Synopsis</label>
+		<%= text_area("series","synopsis") %>
+	</div>
+	<div class="input onecolumn datatablerow">
+		<label for="contactstable">Authors, Creators, Artists</label>
+		<% 
+		 	# need to collect data to show. 
+			datarows=[] 
+			@series.roles.each do | r| 
+				r.contact
+				datarows << [ r.id,  r.role, r.contact.first_name, r.contact.last_name, "<img src='/images/menu_delete.png' class='delete' width='16'>".html_safe() ]
+			end	
+		%>
+		<%= datatable(["Role","First Name", "Last Name",""], datarows, {:model=>"role",:table_id=>"roletable"} ) %>
+ 		<div id="role_assign" class="add"> <img src="/images/menu_add.png"><span>Assign Existing Contact</span>
+ 			<div id="role_new" class="addmore"> <img src="/images/menu_add.png"><span>Add New Contact</span></div>
+		</div>
+	</div>
+
+	<div id="tabs">
+	  <ul>	
+	    <li><a href="#tabs-1"><em>Products</em></a></li>
+	    <li><a href="#tabs-2"><em>Sales & Key Points</em></a></li>
+	  </ul>
+	  <div id="tabs-1">  
+		<label for="isbntable">Products</label>
+		<% datarows=[]
+		   @series.products.each do |p|
+		   	datarows << [ p.id, p.isbn13, p.short_description ]
+ 		   end %> 
+		<%= datatable(["ISBN","Short description"],datarows, {:model=>"product",:table_id=>"isbntable"})%>
+	  </div>
+	  <div id="tabs-2">  Sales and Key Points
+		<div class="input onecolumn">
+			<label for="series_synopsis">Sales Points<br>(Tip Sheet Use)</label>
+			<%= text_area("series","sellingpoints") %>
+		</div>
+		<div class="input onecolumn">
+			<label for="series_synopsis">Key Points<br>(Catalog use)</label>
+			<%= text_area("series","keypoints") %>
+		</div>
+		<div class="input onecolumn">
+			<label for="series_saleshandle">Sales Handle</label>
+			<input id="series_saleshandle" name="series[saleshandle]" value="<%=@series.saleshandle if @series%>">
+		</div>
+		<div class="input onecolumn">
+		</div>
+		<div class="input onecolumn">
+		</div>
+		
+ 	  </div>
+
+	</div>
+
+
+   </div>
+
+   <div id="right" class="greybg" style="border:1px solid black" >
+	<!-- Should be  Format specific fields. -->
+	<div class="input rcolumn">
+		<label for="series_format_id">Format</label>
+		<%= collection_select("series","format_id", Format.all, :id, :name, {}, { onchange:"changeFormat()" } ) %>
+	</div>
+	<div class="input rcolumn">
+		<label for="series_brand_id">Brand</label>
+		<%= collection_select("series","brand_id", Brand.all, :id, :name) %>
+	</div>
+
+	<div class="input rcolumn">
+		<label for="series_publish_to_web">Publish To Web</label> 
+		<%= select_tag( 'series[publish_to_web]', options_for_select([['No','0'], ['Yes','1']], @series.publish_to_web)) %>
+	</div>
+
+    	<%= render :partial => "formatprint" %>
+	<%= render :partial => "formatdigital" %>
+
+	<div class="input rcolumn datatablerow">
+		<label for="territorytable">Territories</label>
+		<% 
+		 	# need to collect data to show. 
+			datarows=[] 
+			@series.series_territory.each do | r| 
+				datarows << [ r.id,  r.territory.name, "<img src='/images/menu_delete.png' class='delete' width='16'>".html_safe() ]
+			end	
+		%>
+		<%= datatable(["Territory","" ], datarows, {:model=>"series_territory",:table_id=>"territorytable"} ) %>
+ 		<div id="territory_assign" class="add"> <img src="/images/menu_add.png"><span>Add Territory </span>
+		</div>
+	</div>
+
+	<div class="input rcolumn">
+		<label for="series_online_id">Online ID</label>
+		<input id="series_online_id" name="id" value="<%=@series.id %>" disabled>
+	</div>
+   </div>
+   
+    <%= render :partial => "dialogs" %>
+
+  <% end %>
+</div>
+
+
+
+
+<!-- UPDATE THE TAB BAR, since this is brought in by AJAX, dynamically alter the bar -->
+	<script>
+		$(function() { $("#tabs").tabs(); }); 
+  		$("#isbntable .dtbody .dttr").click(loadProductSearch);
+	</script>
+
+<script>
+function changeFormat() { 
+	format=$("#series_format_id").val();
+	$(".formattype").hide();
+	switch(format) { 
+		<% Format.all.each do |f| %> 
+		case "<%=f.id%>": $(".format<%=f.category%>").show(); break; 
+		<% end %>
+	}
+}
+
+
+$("#tabsbar li").removeClass("selected");
+$("#tabsbar li.series").removeClass("greyed");
+$("#tabsbar li.series").addClass("selected");
+$("#tabsbar li.series a").off("click").click(function() { loadItem("series",<%=@series.id%>);});
+setup_datatables();
+$("#series_delete").off("click").click(general_delete);
+$("#series_save").off("click").click(general_save);
+$("#series_changelog").off("click").click(general_changelog);
+changeFormat();
+
+</script>
+
+<script>
+
+
+    $(document).ready(function() {
+       if ($('textarea').length > 0) {       
+         var data = $('textarea');
+         $.each(data, function(i) {
+	   if (CKEDITOR.instances[data[i].id]) { delete CKEDITOR.instances[data[i].id]; } 
+           CKEDITOR.replace(data[i].id);
+         });     
+       }  
+    });
+
+</script>
+

@@ -1,0 +1,21 @@
+Use this README file to introduce your application and point to useful places in the API for learning more.
+Run "rake doc:app" to generate API documentation for your models, controllers, helpers, and libraries.
+
+
+KELLY: Started recreating Product Bible in Rails.
+
+Generated controller by "rails generate controller home index"
+   This seem to create the controller "home", with a function "index", and a view for that.
+Generated model "user" "rails generate model user" 
+   This seems to create the model, and a migration file.  Modified the migration file to have a "name" field also.
+   rake db:migrate to run them, which then actually creates the table.
+Generated controller for User
+   added function to do ldap_authentication
+   added functions for Login and Logout.  Login display the template if no parameters, or logins you in if there are parameters.
+Modified application_controller.
+   added before_filter to check that user is logged in, except when calling "login".
+
+OK, user authentication is implemented, and no other controllers can be called if you are not logged in.
+
+
+

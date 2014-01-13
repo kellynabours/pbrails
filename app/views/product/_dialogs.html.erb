@@ -1,0 +1,44 @@
+<div id="dialog-newproductterritory" title="New Territory">
+      	<div id="newproductterritory_errors" class="color: red"></div>
+      	<div class="input"><label for="assign_productterritory">Territory</label>
+                <% datarows=[]
+                        Territory.all.each do |b|
+                                datarows << [ b.name , b.id]
+                        end
+                %>
+                <%= select_tag( 'assign_productterritory', options_for_select(datarows)) %>
+	</div>
+</div>
+
+<script>
+	$("#dialog-newproductterritory").dialog( {
+                autoOpen: false,
+                width:400,
+                buttons: [
+                        {
+                                text: "Done",
+                                click: function() {
+                                        $(this).dialog('close');
+                                        $.ajax("/product/newterritory", {
+                                                data: {
+							product_id: $("#id").val(),
+                                                        territory_id: $("#assign_productterritory").val()
+                                                } ,
+                                                error: function(jqXHR, textStatus, errorThrown) {
+                                                        $("#dialog-newproductterritory #newproductterritory_errors").html(jqXHR.responseText);
+                                                        $("#dialog-newproductterritory").dialog('open');
+                                                } ,
+                                                success: function(data,textStatus,jqXHR) {
+                                                        $("#dialog-newproductterritory #newproductterritory_errors").html("");
+						        $("#mainbody").html(data);
+                                                }
+                                        });
+                                }
+                        },
+                        { text:"Cancel", click: function() { $(this).dialog("close"); } }
+                ]
+        });
+        $("#productterritory_assign > img, #productterritory_assign > span").off("click" );
+        $("#productterritory_assign > img, #productterritory_assign > span").click( function() { $("#dialog-newproductterritory").dialog("open"); } );
+
+</script>

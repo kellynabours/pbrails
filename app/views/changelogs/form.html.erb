@@ -1,0 +1,17 @@
+<div id="main">
+	<%= form_tag do %>
+  	<input id="controller_type" type="hidden" name="controller_type" value="<%=params[:model]%>">
+	<input id="id" type="hidden" name="id" value="<%= params[:model_id] %>"><br>
+
+  	<div id="left">
+	<table border=1><tr><td></td></tr>
+	<% @changelogs.each do |c| %>
+		<tr><td><%=c.created_at.to_s%></td><td><%=c.changelog%></td><td><%=c.user.name if c.user %></tr>
+	<% end %>
+	</table>
+
+  	<% end %>
+	</div>
+</div>
+
+

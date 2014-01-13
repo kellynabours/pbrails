@@ -1,0 +1,61 @@
+
+
+
+<div id="menubar" class="greyborder">
+<ul>
+<li id="property_delete"  class="last"><img src="/images/menu_delete.png"><span>Delete</span></li>
+<li id="property_changelog" ><img src="/images/menu_report.png"><span>Changelog</span></li>
+<li id="property_save" ><img src="/images/menu_save.png"><span>Save</span></li>
+<li id="property_new" class="first"><img src="/images/menu_add.png"><span>New</span></li>
+</ul>
+</div>
+<div id="main">
+  <input id="controller_type" type="hidden" name="controller_type" value="property"><br>
+
+<% if !@prop.nil? %>
+  <input id="id" type="hidden" name="id" value="<%= @prop.id if !@prop.nil?%>"><br>
+  <div id="save_errors" style="color:red; width:100%; text-align: center; font-size:16px;"></div>
+  <div class="input"><label for="title">Title</label> <input id="property_title" name="title" value="<%=@prop.title if !@prop.nil?%>"></div>
+
+  <div class="input datatablerow">
+	<label for="seriestable">Series</label>
+	<% datarows=[]
+	   @prop.series.each do |s|
+		if s.format
+  			formatname=s.format.name
+		else
+		  	formatname=""
+		end
+		datarows << [ s.id, s.name, formatname ] 
+   	   end
+	%>
+	<%= datatable(["Title","Format"], datarows,{:model=>"series", :table_id=>"seriestable"}) %>
+
+	<div id="series_new" class="add"> <img src="/images/menu_add.png"><span>Add New Series</span></div>
+  </div>
+  <script>
+  $("#seriestable .dtbody .dttr").click(loadSeriesSearch);
+  </script>
+
+    <%= render :partial => "dialogs" %>
+
+
+
+
+<% end %>
+  </div>
+
+<!-- UPDATE THE TAB BAR, since this is brought in by AJAX, dynamically alter the bar --> 
+
+<script>
+$("#tabsbar li").removeClass("selected");
+$("#tabsbar li.property").removeClass("greyed");
+$("#tabsbar li.property").addClass("selected");
+$("#tabsbar li.property a").off("click").click(function() { loadItem("property",<%= (@prop.nil?)? 0 : @prop.id%>);});
+setup_datatables();
+$("#property_delete").off("click").click(general_delete);
+$("#property_save").off("click").click(general_save);
+$("#property_changelog").off("click").click(general_changelog);
+
+</script>
+

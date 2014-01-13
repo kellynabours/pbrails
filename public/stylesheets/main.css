@@ -1,0 +1,167 @@
+body,hr,ul  { margin:0px; padding:0px; } 
+body { background-color: rgb(237,245,255); font: 13px/1.231 arial,helvetica,clean,sans-serif;  } 
+
+.darkblue { background: url("/images/yahoo_sprite.png") repeat-x scroll 0px -1400px transparent;
+color:white; font-weight:bold; font-size:13px; position:relative; padding:3px; }
+.lightblue { background-color: rgb(136,153,221); font-size:12px; font-weight:bold; color:white; padding:3px; } 
+.greyborder { border: 1px solid rgb(128,128,128); } 
+
+.greybg { background-color: rgb(242,242,242); } 
+
+
+/* SEARCH BAR */
+#searchbar { overflow: auto; } 
+#searchbar .collapse { height:13px; width:17px;
+	position: absolute; right:2px; top:2px; cursor:pointer; 
+	background: url("/images/yahoo_sprite.png") no-repeat scroll -3px -450px transparent;
+	border: 1px solid rgb(128,128,128);
+}
+#searchbarcollapsed { width: 20px; padding-left:5px; border:1px solid rgb(128,128,128); float:left; position:relative; } 
+#searchbarcollapsed .reveal { height:13px; width:17px; 
+	position: absolute; right:2px; top:2px; cursor:pointer; 
+	background: url("/images/yahoo_sprite.png") no-repeat scroll -3px -450px transparent;
+	border: 1px solid rgb(128,128,128);
+}
+#searchresult table { width:100%; border-collapse: seperate; border-spacing: 0px; } 
+#searchresult table tr { cursor: pointer; } 
+#searchresult table td { overflow: hidden; margin:0px; padding: 4px 10px; text-align: left; } 
+#searchresult table tr.odd { background-color: rgb(237,245,255); } 
+#searchresult table tr.even { background-color: rgb(255,255,255); } 
+#searchresult table th { 
+	background: url(/images/yahoo_sprite.png) repeat-x scroll 0px 0px transparent;
+	margin:0px; padding:4px 10px;
+	font-weight: normal;
+	cursor:pointer;
+	text-align:left; 
+}
+
+#searchresult .odd { background-color:  } 
+	
+
+/* PAGE HEADER */
+#pagehdr ul { float:right; padding-right:10px; height:40px; display:block; margin-top:10px; margin-bottom:0px; } 
+#pagehdr li { float:left; padding-left:15px; list-style: none;  } 
+#pagehdr hr { clear:both; } 
+#pagehdr a { text-decoration: none; color:black; font-size:12px; } 
+
+
+
+/* TABS */
+ul.tabs {  clear:both;  } 
+ul.tabs > li { 
+	float:left; 
+	margin: 0px 0.16em 0px 0px; 
+	padding:1px 0px 0px;
+	vertical-align:bottom;
+	cursor:pointer;
+	list-style: none outside none;
+   }
+
+ul.tabs > li > a { 
+	text-decoration: none;  font-size:13px; font-weight: bold; color: black;
+	background: url("/images/yahoo_sprite.png") repeat-x scroll 0% 0% rgb(216,216,216);
+	border-style:solid;
+	border-color:rgb(163,163,163);
+	border-width:0px 1px;
+	display: inline-block;
+	vertical-align:bottom;
+ } 
+ul.tabs > li > a > em { 
+	padding: .35em .75em; 
+	border-style: solid;
+	border-color: rgb(163,163,163);
+	border-width: 1px 0px 0px;
+	margin-top: -1px;
+	display:block;
+}
+
+ul.tabs >  li.selected  > a{ border-color: rgb(36,51,86); background: url(/images/yahoo_sprite.png) repeat-x scroll left -1400px rgb(38,71,160); color: rgb(255,255,255); } 
+
+ul.tabs > li.greyed > a { color: rgb(128,128,128); } 
+
+.ui-tabs { background: transparent; border: none;  } 
+ul.ui-tabs-nav { border-color: rgb(38,71,160); border-width: 0px 0px 5px; border-style: solid; border-bottom-left-radius:0px; border-bottom-right-radius:0px; background: transparent;  } 
+ul.ui-tabs-nav li.ui-state-default, 
+ul.ui-tabs-nav li.ui-state-active, 
+ul.ui-tabs-nav li.ui-state-hover, 
+{ 
+	margin: 0px; .16em 0px 0px;
+	padding:1px 0px 0px;
+	vertical-align:bottom;
+	cursor: pointer;
+	list-style: none outside none; 	
+}
+ul.ui-tabs-nav > li > a ,
+ul.ui-tabs-nav > li.ui-state-default > a ,
+ul.ui-tabs-nav > li.ui-state-active > a ,
+ul.ui-tabs-nav > li.ui-state-hover > a 
+{ 
+	text-decoration: none;  font-size:13px; font-weight: bold; color: black;
+	background: url("/images/yahoo_sprite.png") repeat-x scroll 0% 0% rgb(216,216,216);
+	border-style:solid;
+	border-color:rgb(163,163,163);
+	border-width:0px 1px;
+	display: inline-block;
+	vertical-align:bottom;
+	padding: 0px;
+	cursor:pointer;
+} 
+ul.ui-tabs-nav > li > a > em { 
+	padding: .35em .75em; 
+	border-style: solid;
+	border-color: rgb(163,163,163);
+	border-width: 1px 0px 0px;
+	margin-top: -1px;
+	display:block;
+}
+
+ul.ui-tabs-nav li.ui-state-active { background: rgb(38,71,160); color:white; border:1px solid rgb(38,71,160); } 
+ul.ui-tabs-nav li.ui-state-active a { background: rgb(38,71,160); color:white; } 
+ul.ui-tabs-nav li.ui-state-active.ui-state-hover { border: 1px solid rgb(38,71,160); } 
+
+
+
+#tabsbar { border-style: solid; border-color: rgb(38,71,160); border-width: 0px 0px 5px;  width:100%; height:28px; } 
+
+#middle { float:left; } 
+
+
+/* Main Page */
+#menubar li { float:right; list-style: none outside none; padding:4px 10px; border-right:1px solid rgb(128,128,128); } 
+#menubar li.first { border-left:1px solid rgb(128,128,128); } 
+#menubar li.last { border-right: none; } 
+#menubar li img { float:left; } 
+#menubar li span { float:left; } 
+#menubar { background: url(/images/yahoo_sprite.png) repeat-x scroll 0px 0px transparent; height:32px; }
+#menubar li.selected { background: url(/images/yahoo_sprite.png) repeat-x scroll 0px -1700px transparent; } 
+
+#main { padding: 6px; } 
+#main label { display: block; width: 90px; padding:0px 6px 0px 0px; text-align:right;  float:left;  margin-top: 5px; } 
+#main .twocolumn input  { width:150px; float:left;  margin-top: 5px; } 
+#main .twocolumn select { width:156px; float:left;   margin-top: 5px;} 
+#main .rcolumn input  { width:150px; float:left;  margin-top: 5px; } 
+#main .rcolumn select { width:156px; float:left;   margin-top: 5px;} 
+#main div.input { clear: both; }  
+#main .onecolumn textarea { width: 408px; margin-top: 5px; height:140px; } 
+#main .rcolumn textarea { width: 250px; margin-top: 5px; height:140px; } 
+#main #left { float:left; } 
+#main #right { float:right; width:280px; overflow:auto } 
+
+.datatable { width: 408px; border: 1px solid grey;  display:block; float:left;  background-color: white; height:140px; margin-top:5px; } 
+.datatable .dttr { clear: both;  width:100%; height:18px; overflow:hidden;} 
+.datatable .dtth { float:left; font-weight:bold; overflow:hidden; } 
+.datatable .dttd { float:left;  overflow:hidden;} 
+.datatable .odd { background-color: rgb(237,245,255); } 
+.datatable .even { background-color: rgb(255,255,255); } 
+.datatable .dthead { background-color: grey; width:100%; overflow: auto;  }
+.datatable .dtbody { width:100%; overflow:auto; }  
+.datatablerow .add { margin-left: 90px; clear:both; height:20px; } 
+.datatablerow .add img { float:left; } 
+.datatablerow .add span { float:left; } 
+.datatablerow .addmore { margin-left: 90px; float:left; } 
+.datatablerow .addmore img { float:left; } 
+
+#right .datatable { width: 154px; } 
+
+
+

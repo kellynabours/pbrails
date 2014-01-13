@@ -1,0 +1,33 @@
+
+
+<div class="formattype formatPRINT">
+	<div class="input rcolumn">
+		<label for="series_product_trimsize_id">Trimsize</label>
+		<%= collection_select("product","product_trimsize_id", ProductTrimsize.all, :id, :name) %>
+	</div>
+	<div class="input rcolumn">
+		<label for="product_orientation_id">Orientation</label>
+                <%= select_tag( 'product[orientation]', options_for_select([['',''],['LtoR','LtoR'], ['RtoL','RtoL'],['N/A','N/A']], @product.orientation)) %>
+	</div>
+	<div class="input rcolumn">
+		<label for="series_rating_id">Rating</label>
+		<%= collection_select("product","rating_id", Rating.all, :id, :name) %>
+	</div>
+        <div class="input rcolumn">
+		<label for="product_length">Length</label>
+		<input name="product[length]" id="product_length" value="<%=@product.length if @product%>">
+	</div>
+        <div class="input rcolumn">
+		<label for="product_edition">Edition</label>
+		<input name="product[edition]" id="product_edition" value="<%=@product.edition if @product%>">
+	</div>
+        <div class="input rcolumn">
+		<label for="product_art">Art</label>
+		<input name="product[art]" id="product_art" value="<%=@product.art if @product%>">
+	</div>
+        <div class="input rcolumn">
+		<label for="product_issue_number">Issue Number</label>
+		<input name="product[issue_number]" id="product_issue_number" value="<%=@product.issue_number if @product%>">
+	</div>
+</div>
+

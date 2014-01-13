@@ -1,0 +1,9 @@
+
+<%= form_tag("/reports/generate") do %>
+<table>
+<% Report.all.each do |r| %>
+<tr><td><input value="<%=r.id%>" type="radio" id="reportid" name="reportid"><%=r.name%></td></tr>
+<% end %>
+</table>
+<input type="submit" value="Generate">
+<% end %>

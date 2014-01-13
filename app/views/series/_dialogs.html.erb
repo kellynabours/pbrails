@@ -1,0 +1,231 @@
+<div id="dialog-assigncontact" title="New Role">
+      	<div id="new_errors" class="color: red"></div>
+      	<div class="input">
+		<label for="assigncontact-role">Role</label> 
+		<input name="assigncontact-role" id="assigncontact-role" value="">
+      	</div>
+      	<div class="input"><label for="assign_contact">Contact</label>
+                <% datarows=[]
+                        Contact.all.each do |s|
+                                datarows << [ s.first_name + " " + s.last_name, s.id]
+                        end
+                %>
+                <%= select_tag( 'assign_contact', options_for_select(datarows)) %>
+	</div>
+</div>
+
+<div id="dialog-newcontact" title="New Role">
+      	<div id="newcontact_errors" class="color: red"></div>
+      	<div class="input">
+		<label for="newcontact-role">Role</label> 
+		<input name="newcontact-role" id="newcontact-role" value="">
+      	</div>
+      	<div class="input">
+		<label for="newcontact-first_name">First Name</label>
+		<input name="newcontact-first_name" id="newcontact-first_name" value="">
+	</div>
+      	<div class="input">
+		<label for="newcontact-last_name">Last Name</label>
+		<input name="newcontact-last_name" id="newcontact-last_name" value="">
+	</div>
+</div>
+
+
+<div id="dialog-newbisac" title="New Bisac">
+      	<div id="newbisac_errors" class="color: red"></div>
+      	<div class="input"><label for="assign_bisac">Bisac</label>
+                <% datarows=[]
+                        Bisac.all.each do |b|
+                                datarows << [ b.code + " " + b.description, b.id]
+                        end
+                %>
+                <%= select_tag( 'assign_bisac', options_for_select(datarows)) %>
+	</div>
+</div>
+
+<div id="dialog-newgenre" title="New Genre">
+      	<div id="newgenre_errors" class="color: red"></div>
+      	<div class="input"><label for="assign_genre">Genre</label>
+                <% datarows=[]
+                        Genre.all.each do |b|
+                                datarows << [ b.name , b.id]
+                        end
+                %>
+                <%= select_tag( 'assign_genre', options_for_select(datarows)) %>
+	</div>
+</div>
+
+<div id="dialog-newterritory" title="New Territory">
+      	<div id="newterritory_errors" class="color: red"></div>
+      	<div class="input"><label for="assign_territory">Territory</label>
+                <% datarows=[]
+                        Territory.all.each do |b|
+                                datarows << [ b.name , b.id]
+                        end
+                %>
+                <%= select_tag( 'assign_territory', options_for_select(datarows)) %>
+	</div>
+</div>
+
+<script>
+	$("#dialog-newterritory").dialog( {
+                autoOpen: false,
+                width:400,
+                buttons: [
+                        {
+                                text: "Done",
+                                click: function() {
+                                        $(this).dialog('close');
+                                        $.ajax("/series/newterritory", {
+                                                data: {
+							series_id: $("#id").val(),
+                                                        territory_id: $("#assign_territory").val()
+                                                } ,
+                                                error: function(jqXHR, textStatus, errorThrown) {
+                                                        $("#dialog-newterritory #newterritory_errors").html(jqXHR.responseText);
+                                                        $("#dialog-newterritory").dialog('open');
+                                                } ,
+                                                success: function(data,textStatus,jqXHR) {
+                                                        $("#dialog-newterritory #newterritory_errors").html("");
+						        $("#mainbody").html(data);
+                                                }
+                                        });
+                                }
+                        },
+                        { text:"Cancel", click: function() { $(this).dialog("close"); } }
+                ]
+        });
+        $("#territory_assign > img, #territory_assign > span").off("click" );
+        $("#territory_assign > img, #territory_assign > span").click( function() { $("#dialog-newterritory").dialog("open"); } );
+
+	$("#dialog-newgenre").dialog( {
+                autoOpen: false,
+                width:400,
+                buttons: [
+                        {
+                                text: "Done",
+                                click: function() {
+                                        $(this).dialog('close');
+                                        $.ajax("/series/newgenre", {
+                                                data: {
+							series_id: $("#id").val(),
+                                                        genre_id: $("#assign_genre").val()
+                                                } ,
+                                                error: function(jqXHR, textStatus, errorThrown) {
+                                                        $("#dialog-newgenre #newgenre_errors").html(jqXHR.responseText);
+                                                        $("#dialog-newgenre").dialog('open');
+                                                } ,
+                                                success: function(data,textStatus,jqXHR) {
+                                                        $("#dialog-newgenre #new_errors").html("");
+						        $("#mainbody").html(data);
+                                                }
+                                        });
+                                }
+                        },
+                        { text:"Cancel", click: function() { $(this).dialog("close"); } }
+                ]
+        });
+        $("#genre_assign > img, #genre_assign > span").off("click" );
+        $("#genre_assign > img, #genre_assign > span").click( function() { $("#dialog-newgenre").dialog("open"); } );
+
+	$("#dialog-newbisac").dialog( {
+                autoOpen: false,
+                width:400,
+                buttons: [
+                        {
+                                text: "Done",
+                                click: function() {
+                                        $(this).dialog('close');
+                                        $.ajax("/series/newbisac", {
+                                                data: {
+							series_id: $("#id").val(),
+                                                        bisac_id: $("#assign_bisac").val()
+                                                } ,
+                                                error: function(jqXHR, textStatus, errorThrown) {
+                                                        $("#dialog-newbisac #newbisac_errors").html(jqXHR.responseText);
+                                                        $("#dialog-newbisac").dialog('open');
+                                                } ,
+                                                success: function(data,textStatus,jqXHR) {
+                                                        $("#dialog-newbisac #new_errors").html("");
+						        $("#mainbody").html(data);
+                                                }
+                                        });
+                                }
+                        },
+                        { text:"Cancel", click: function() { $(this).dialog("close"); } }
+                ]
+        });
+        $("#bisac_assign > img, #bisac_assign > span").off("click" );
+        $("#bisac_assign > img, #bisac_assign > span").click( function() { $("#dialog-newbisac").dialog("open"); } );
+
+	// Assign Existing Contact
+	$("#dialog-assigncontact").dialog( {
+                autoOpen: false,
+                width:400,
+                buttons: [
+                        {
+                                text: "Done",
+                                click: function() {
+                                        $(this).dialog('close');
+                                        $.ajax("/role/new", {
+                                                data: {
+                                                        role: $("#assigncontact-role").val() ,
+                                                        contact_id: $("#assign_contact").val(),
+                                                        series_id: $("#id").val()
+                                                } ,
+                                                error: function(jqXHR, textStatus, errorThrown) {
+                                                        $("#dialog-assigncontact #new_errors").html(jqXHR.responseText);
+                                                        $("#dialog-assigncontact").dialog('open');
+                                                } ,
+                                                success: function(data,textStatus,jqXHR) {
+                                                        $("#dialog-assigncontact #new_errors").html("");
+							var body=$("#roletable .dtbody").html();
+							$("#roletable .dtbody").html(body+data);
+					                $("#roletable .delete").off().click( datatable_delete);
+                                                }
+                                        });
+                                }
+                        },
+                        { text:"Cancel", click: function() { $(this).dialog("close"); } }
+                ]
+        });
+        $("#role_assign > img, #role_assign > span").off("click" );
+        $("#role_assign > img, #role_assign > span").click( function() { $("#dialog-assigncontact").dialog("open"); } );
+
+	// Add a totally new contact.
+	$("#dialog-newcontact").dialog( {
+                autoOpen: false,
+                width:400,
+                buttons: [
+                        {
+                                text: "Done",
+                                click: function() {
+                                        $(this).dialog('close');
+                                        $.ajax("/role/newcontact", {
+                                                data: {
+                                                        role: $("#newcontact-role").val() ,
+                                                        first_name: $("#newcontact-first_name").val(),
+                                                        last_name: $("#newcontact-last_name").val(),
+                                                        series_id: $("#id").val()
+                                                } ,
+                                                error: function(jqXHR, textStatus, errorThrown) {
+                                                        $("#dialog-newcontact .errors").html(jqXHR.responseText);
+                                                        $("#dialog-newcontact").dialog('open');
+                                                } ,
+                                                success: function(data,textStatus,jqXHR) {
+                                                        $("#dialog-newcontact .errors").html("");
+							var body=$("#roletable .dtbody").html();
+							$("#roletable .dtbody").html(body+data);
+					                $("#roletable .delete").off().click( datatable_delete);
+                                                }
+                                        });
+                                }
+                        },
+                        { text:"Cancel", click: function() { $(this).dialog("close"); } }
+                ]
+        });
+        $("#role_new > img, #role_new > span").off("click");
+        $("#role_new > img, #role_new > span").click( function() { $("#dialog-newcontact").dialog("open"); } );
+
+
+</script>
