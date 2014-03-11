@@ -1,0 +1,28 @@
+<style>
+  .twocolumn { float:left; width:250px; } 
+ .twocolumn select { border: 1px solid black; height:80px;} 
+ #main .twocolumn label { width:84px; padding-right:6px; left:left } 
+</style>
+<div id="main">
+	<%= render :partial=>"searchform"%>
+</div>
+
+<script>
+$("#tabsbar li").removeClass("selected");
+$("#tabsbar li.quick").addClass("selected");
+</script>
+
+<script>
+function generate_report()
+{
+        $.ajax("/quick/getproducts",{ data : $("form").serialize(),
+                error: function(jqXHR, textStatus, errorThrown) { alert(errorThrown); } ,
+                success: function(data,textStatus,jqXHR) {
+			alert("success");
+                        $("#mainbody").html(data);
+                }
+        });
+
+}
+</script>
+

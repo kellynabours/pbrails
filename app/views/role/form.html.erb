@@ -1,0 +1,87 @@
+<div id="menubar" class="greyborder">
+	<ul>
+		<li id="contact_delete"  class="last"><img src="/images/menu_delete.png"><span>Delete</span></li>
+		<li id="contact_changelog" ><img src="/images/menu_report.png"><span>Changelog</span></li>
+		<li id="contact_save" ><img src="/images/menu_save.png"><span>Save</span></li>
+	</ul>
+</div>
+<div id="main">
+  <%= form_tag do %>
+	 <input id="controller_type" type="hidden" name="controller_type" value="contacts">
+
+
+   <div id="left">
+	<input id="id" type="hidden" name="id" value="<%= @contact.id if !@contact.nil?%>"><br>
+	<div id="save_errors" style="color:red; width:100%; text-align: center; font-size:16px;"></div>
+
+	<div class="input twocolumn">
+                <label for="first_name">First Name</label>
+                <input id="first_name" name="contact[first_name]" value="<%=@contact.first_name if !@contact.nil?%>">
+                <label for="last_name">Last Name</label>
+                <input id="last_name" name="contact[last_name]" value="<%=@contact.last_name if !@contact.nil?%>">
+        </div>
+
+	<div class="input onecolumn">
+                <label for="contact_sales_bio">Sales Bio (marketing collateral, online retailer use)</label>
+                <textarea id="contact_sales_bio" name="contact[bio]"><%=@contact.bio if !@contact.nil?%></textarea>
+        </div>
+
+	<div class="input onecolumn">
+                <label for="contact_editorial_bio">Editorial Bio (product use)</label>
+                <textarea id="product_short_description" name="contact[editorial_bio]"> <%=@contact.editorial_bio if !@product.nil?%></textarea>
+        </div>
+
+
+
+   </div>
+
+   <div id="right" class="greybg" style="border:1px solid black" >
+	<%
+	%>
+
+	<div class="input rcolumn datatablerow">
+                <label for="roletable">Role</label>
+                <%
+                        # need to collect data to show.
+                        datarows=[]
+                        @contact.roles.each do | r|
+                                datarows << [ r.id,  r.role, r.series.name ]
+                        end
+                %>
+                <%= datatable(["Role","Series"], datarows, {:model=>"roles",:table_id=>"roletable",:widths=>["80px","69px"]} ) %>
+        </div>
+
+   </div>
+   
+  <% end %>
+</div>
+
+<!-- UPDATE THE TAB BAR, since this is brought in by AJAX, dynamically alter the bar -->
+
+<script>
+
+$("#tabsbar li").removeClass("selected");
+$("#tabsbar li.contacts").removeClass("greyed");
+$("#tabsbar li.contacts").addClass("selected");
+$("#tabsbar li.contacts a").off("click").click(function() { loadItem("contacts",<%=@contact.id%>);});
+$("#contact_delete").off("click").click(general_delete);
+$("#contact_save").off("click").click(general_save);
+$("#contact_changelog").off("click").click(general_changelog);
+
+</script>
+
+<script>
+    $(document).ready(function() {
+       if ($('textarea').length > 0) {
+         var data = $('textarea');
+         $.each(data, function(i) {
+ 	   if (CKEDITOR.instances[data[i].id]) { delete CKEDITOR.instances[data[i].id]; }
+           CKEDITOR.config.customConfig='/ckeditor/ckeditor_config.js';
+           CKEDITOR.replace(data[i].id);
+         });
+       }
+    });
+
+</script>
+
+

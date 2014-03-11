@@ -1,0 +1,53 @@
+<%= form_tag do %>
+
+  <div class="twocolumn">
+    <label for="">Name</label>
+    <input type="input" value="" name="product[name]">
+  </div>
+
+  <div class="twocolumn">
+    <label for="">Short Desc</label>
+    <input type="input" value="" name="product[short_description]">
+  </div>
+
+  <div class="twocolumn">
+    <label for="">Original Pub</label>
+    <input type="input" value="" name="series[original_publisher]">
+  </div>
+
+<br style="clear:both">
+
+  <div class="twocolumn">
+    <label for="product_brand_id">Brand</label>
+    <%= collection_select("product","brand_id", Brand.order(:name),:id,:name,{include_blank: 'Any'},{:multiple=>true}) %>
+  </div>
+
+  <div class="twocolumn">
+    <label for="product_format_id">Format</label>
+    <%= collection_select("product","format_id", Format.order(:name),:id,:name,{include_blank: 'Any'},{:multiple=>true}) %>
+  </div>
+
+  <div class="twocolumn">
+    <label for="product_format_id">Series</label>
+    <%= collection_select("product","series_id", Series.order(:name),:id,:name,{include_blank: 'Any'},{:multiple=>true}) %>
+  </div>
+
+  <div class="twocolumn">
+    <label for="product_format_id">Product Status</label>
+    <%= select_tag(:status,options_for_select([["Any",""],["Approved","Approved"],["Upapproved","Unapproved"],["B.O.","B.O"],["O.S.I","O.S.I"],["Out-of-print","Out-of-print"]]),{:multiple=>true}) %>
+  </div>
+
+  <div class="twocolumn">
+    <label for="product_format_id">Licensor</label>
+    <%= collection_select("series","licensor_id", Licensor.order(:name),:id,:name,{include_blank: 'Any'},{:multiple=>true}) %>
+  </div>
+  <div class="twocolumn">
+    <label for="product_format_id">Territories</label>
+    <%= collection_select("product","territories", Territory.order(:name),:id,:name,{include_blank: 'Any'},{:multiple=>true}) %>
+  </div>
+
+
+<br style="clear:both">
+  <input type="button" value="Look Up" onclick="generate_report()">
+
+<% end %>
