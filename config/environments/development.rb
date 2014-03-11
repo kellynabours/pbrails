@@ -22,5 +22,11 @@ Pb::Application.configure do
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
+
+  BASEURL="http://dev.pb.viz.com:3000/"
+  CLIENT_ID="967081670137-urj37i1c4m310n69a32pk8qmi6viems0.apps.googleusercontent.com"
+  CLIENT_SECRET="2rVwQjECbF6sT0qFGJqWt8L0"
+  CLIENT_SCOPE="https://www.googleapis.com/auth/userinfo.email"
+
 end
 

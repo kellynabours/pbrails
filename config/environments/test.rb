@@ -32,4 +32,12 @@ Pb::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  BASEURL="http://test.pb.viz.com/"
+  CLIENT_ID="967081670137-8edqmkhblddva8b3eqe7jnhhidfb59bk.apps.googleusercontent.com"
+  CLIENT_SECRET="V6SgymgIYdueezSIVclJkJHM"
+  CLIENT_SCOPE="https://www.googleapis.com/auth/userinfo.email"
+
+
+
 end

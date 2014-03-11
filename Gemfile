@@ -33,3 +33,5 @@ gem "net-ldap"
 # end
 
 gem 'spreadsheet'
+gem 'google-api-client'
+gem 'signet'

@@ -5,6 +5,7 @@ function loadPropertySearch() { loadItem("property",$(this).attr("model_id")); }
 function loadSeriesSearch() { loadItem("series",$(this).attr("model_id")); } 
 function loadProductSearch() { loadItem("products",$(this).attr("model_id")); } 
 function loadContactSearch() { loadItem("contacts",$(this).attr("model_id")); } 
+function loadRolesSearch() { loadItem("role",$(this).attr("model_id")); } 
 
 function loadItem(controller,id_in)
 { 
@@ -19,7 +20,6 @@ function loadItem(controller,id_in)
 		 	} );
 			// load in new screen 
 			$("#mainbody").html(data);
-			menubar_buttons();
 		}
 	} );
 }

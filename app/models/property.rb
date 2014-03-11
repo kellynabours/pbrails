@@ -1,5 +1,5 @@
 class Property < ApplicationModel
-	set_table_name "pb_properties"
+	set_table_name "z_properties"
 	has_many :series 
 	scope :title_like, lambda {|str| where( 'lower(title) like ?' , "%"+str.downcase+"%" ).order("title") } 
 

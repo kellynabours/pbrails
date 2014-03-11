@@ -1,5 +1,5 @@
 class Series < ApplicationModel
-        set_table_name "pb_series"
+        set_table_name "z_series"
 	belongs_to :property
 	has_many :roles
 	has_many :contacts , :through=>:roles

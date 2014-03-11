@@ -46,4 +46,10 @@ Pb::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+
+  BASEURL="http://pb.viz.com/"
+  CLIENT_ID="967081670137-7h12a1nj3vu6a3tdmru5ij3cn42q5dv9.apps.googleusercontent.com"
+  CLIENT_SECRET="jIqIAmLlR7yUc4aypPkFCwAE"
+  CLIENT_SCOPE="https://www.googleapis.com/auth/userinfo.email"
+
 end

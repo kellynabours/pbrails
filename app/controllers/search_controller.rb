@@ -15,6 +15,16 @@ class SearchController < ApplicationController
 			@returns << [ series.id, series.name ] 
 		end
 	end
+	if params['searchtype']=='product'
+		Product.name_like(params[:searchvalue]).each do |prod|
+			@returns << [ prod.id , prod.short_description]
+		end
+	end
+	if params['searchtype']=='contact'
+		Contact.name_like(params[:searchvalue]).each do |cont|
+			@returns << [ cont.id , cont.first_name+" "+cont.last_name ]
+		end
+	end
         render :layout=>false;
   end
 

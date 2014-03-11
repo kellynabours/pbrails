@@ -7,7 +7,7 @@ task :copy_pb => :environment do
 
   desc "Copy all formats from PB into Formats"
   Oldpb.connection.select_all("select * from z_formats").each do |f|
-    format=Format.find_by_id(f["id"])
+    format=Format.unscoped.find_by_id(f["id"])
     if (!format)
       format=Format.new()
       format.id=f["id"]
@@ -20,7 +20,7 @@ task :copy_pb => :environment do
   desc "Copy all Parent Series from pb into Properties"
 
   Oldpb.connection.select_all("select * from z_series where id in (select distinct parentSeries_id from z_series)").each do |s| 
-    prop=Property.find_by_id(s["id"])
+    prop=Property.unscoped.find_by_id(s["id"])
     if !prop
       prop=Property.new()
       prop.id=s["id"]
@@ -31,7 +31,7 @@ task :copy_pb => :environment do
 
   desc "Copy in all brands, licensors, trimsizes, orientations, ratings"
   Oldpb.connection.select_all("select * from z_brands").each do |b|
-    brand=Brand.find_by_id(b["id"])
+    brand=Brand.unscoped.find_by_id(b["id"])
     if !brand
       brand=Brand.new()
       brand.id=b["id"]
@@ -45,7 +45,7 @@ task :copy_pb => :environment do
     end
   end
   Oldpb.connection.select_all("select * from z_licensors").each do |l|
-    licensor=Licensor.find_by_id(l["id"])
+    licensor=Licensor.unscoped.find_by_id(l["id"])
     if !licensor
       licensor=Licensor.new()
       licensor.id=l["id"]
@@ -54,7 +54,7 @@ task :copy_pb => :environment do
     end
   end
   Oldpb.connection.select_all("Select * from z_ratings").each do |r|
-    rating=Rating.find_by_id(r["id"])
+    rating=Rating.unscoped.find_by_id(r["id"])
     if !rating
       rating=Rating.new()
       rating.id=r["id"]
@@ -63,7 +63,7 @@ task :copy_pb => :environment do
     end
   end
   Oldpb.connection.select_all("select * from z_product_trimsizes").each do |t|
-    trimsize=ProductTrimsize.find_by_id(t["id"])
+    trimsize=ProductTrimsize.unscoped.find_by_id(t["id"])
     if !trimsize
       trimsize=ProductTrimsize.new()
       trimsize.id=t["id"]
@@ -72,7 +72,7 @@ task :copy_pb => :environment do
     end
   end
   Oldpb.connection.select_all("select * from z_bisacs").each do |b|
-    bisac=Bisac.find_by_id(b["id"])
+    bisac=Bisac.unscoped.find_by_id(b["id"])
     if !bisac
       bisac=Bisac.new
       bisac.id=b["id"]
@@ -82,7 +82,7 @@ task :copy_pb => :environment do
     end
   end
   Oldpb.connection.select_all("select * from z_genres").each do |g|
-    genre=Genre.find_by_id(g["id"])
+    genre=Genre.unscoped.find_by_id(g["id"])
     if !genre
       genre=Genre.new()
       genre.id=g["id"]
@@ -94,9 +94,9 @@ task :copy_pb => :environment do
   desc "Copy all child Series from pb into Series "
 
   Oldpb.connection.select_all("select * from z_series").each do |s|
-    prop=Property.find_by_id(s["id"])
+    prop=Property.unscoped.find_by_id(s["id"])
     if !prop
-      series=Series.find_by_id(s["id"])
+      series=Series.unscoped.find_by_id(s["id"])
       if !series
         if s["parentSeries_id"]=="" || s["parentSeries_id"]==nil
           s["parentSeries_id"]=0
@@ -116,6 +116,9 @@ task :copy_pb => :environment do
         series.priority=s["priority"]
         series.product_trimsize_id=s["product_trimsize_id"]
         series.release_frequency=s["factsheet_release_frequency"]
+        series.saleshandle=s["factsheet_handle"]
+        series.keypoints=s["keypoints"]
+	series.sellingpoints=s["sellingpoints"]
         if s["cover_id"]=="1"
           series.cover="soft"
         end
@@ -137,7 +140,7 @@ task :copy_pb => :environment do
   end
  
   Oldpb.connection.select_all("select * from z_series_bisacs").each do |b|
-    sb=SeriesBisac.find_by_id(b["id"])
+    sb=SeriesBisac.unscoped.find_by_id(b["id"])
     if !sb
       sb=SeriesBisac.new()
       sb.id=b["id"]
@@ -148,7 +151,7 @@ task :copy_pb => :environment do
   end
 
   Oldpb.connection.select_all("select * from z_series_genres").each do |g|
-    sg=SeriesGenre.find_by_id(g["id"])
+    sg=SeriesGenre.unscoped.find_by_id(g["id"])
     if !sg
       sg=SeriesGenre.new()
       sg.id=g["id"]
@@ -159,8 +162,8 @@ task :copy_pb => :environment do
   end
 
   desc "Copy all Products from pb "
-  Oldpb.connection.select_all("select * from z_products").each do |p|
-    prod=Product.find_by_id(p["id"])
+  Oldpb.connection.select_all("select z_products.*,z_product_statuses.name as status  from z_products left outer join z_product_statuses on z_products.product_status_id= z_product_statuses.id").each do |p|
+    prod=Product.unscoped.find_by_id(p["id"])
     if !prod
       prod=Product.new()
       prod.id=p["id"]
@@ -191,6 +194,7 @@ task :copy_pb => :environment do
       prod.length=p["length"]
       prod.issue_number=p["issue_number"].to_i
       prod.edition=p["edition"].to_i
+      prod.status=p["status"]
 
       if p["orientation_id"]=="1"
         prod.orientation="LtoR"
@@ -218,14 +222,14 @@ task :copy_pb => :environment do
   end
 
   desc "Copy all users and changelogs into pb"
-  user=User.find_by_id(0)
+  user=User.unscoped.find_by_id(0)
   if !user
      user=User.new()
      user.id=0
      user.name="System"
   end
   Oldpb.connection.select_all("select * from z_users").each do |u|
-    user=User.find_by_id(u["id"])
+    user=User.unscoped.find_by_id(u["id"])
     if !user
 	user=User.new()
         user.id=u["id"]
@@ -252,7 +256,7 @@ task :copy_pb => :environment do
 
   desc "Copy territory information"
   Oldpb.connection.select_all("select * from z_territories").each do |t|
-    ter=Territory.find_by_id(t["id"])
+    ter=Territory.unscoped.find_by_id(t["id"])
     if !ter
 	ter=Territory.new()
 	ter.id=t["id"]
@@ -262,7 +266,7 @@ task :copy_pb => :environment do
     end
   end
   Oldpb.connection.select_all("select * from z_series_territories").each do |t|
-    ter=SeriesTerritory.find_by_id(t["id"])
+    ter=SeriesTerritory.unscoped.find_by_id(t["id"])
     if !ter
       ter=SeriesTerritory.new()
       ter.id=t["id"]
@@ -272,7 +276,7 @@ task :copy_pb => :environment do
     end
   end
   Oldpb.connection.select_all("select * from z_products_territories").each do |t|
-    ter=ProductTerritory.find_by_id(t["id"])
+    ter=ProductTerritory.unscoped.find_by_id(t["id"])
     if !ter
       ter=ProductTerritory.new()
       ter.id=t["id"]
@@ -284,7 +288,7 @@ task :copy_pb => :environment do
 
   desc "Copy reports"
   Oldpb.connection.select_all("select * from z_reports").each do |r|
-    rep=Report.find_by_id(r["id"])
+    rep=Report.unscoped.find_by_id(r["id"])
     if !rep
       rep=Report.new()
       rep.id=r["id"]
@@ -293,7 +297,7 @@ task :copy_pb => :environment do
     end
   end
   Oldpb.connection.select_all("select * from z_reports_criterias").each do |r|
-    rep=ReportCriterium.find_by_id(r["id"])
+    rep=ReportCriterium.unscoped.find_by_id(r["id"])
     if !rep
       rep=ReportCriterium.new()
       rep.id=r["id"]
@@ -307,7 +311,7 @@ task :copy_pb => :environment do
     end
   end
   Oldpb.connection.select_all("select * from z_reports_fields").each do |r|
-    rep=ReportField.find_by_id(r["id"])
+    rep=ReportField.unscoped.find_by_id(r["id"])
     if !rep
       rep=ReportField.new()
       rep.id=r["id"]

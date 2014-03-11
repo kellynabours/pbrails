@@ -17,15 +17,24 @@ function general_delete()
 function general_save()
 {
 	controller=$("#controller_type").val();
+	// Update CKEDITOR fields
+	for (instance in CKEDITOR.instances)
+		CKEDITOR.instances[instance].updateElement();
+	$('textarea').trigger('keyup'); // Why?  Dont know, it was in a online example.
+	
 	data=$("form").serialize();
-	alert(data);
-	$.ajax("/"+controller+"/save",{ data : data, 
+	$.ajax("/"+controller+"/save",{ data : $("form").serialize(), 
 		error: function(jqXHR, textStatus, errorThrown) { 
 			$("#save_errors").html(jqXHR.responseText);
 		} ,
 		success: function(data,textStatus,jqXHR) { 
+			// Destroy existing Dialogs before reloading
+                        $(".ui-dialog").each( function() {
+                                name=$(this).attr("aria-describedby");
+                                $("#"+name).dialog("destroy");
+                        } );
+
 			$("#mainbody").html(data);
-			menubar_buttons();
 			modified=0;
 		}
 	});
@@ -64,8 +73,6 @@ function property_setup() {
 function menubar_buttons() { 
 	$("#menubar li").mouseenter(function() { $(this).addClass('selected'); });
 	$("#menubar li").mouseleave(function() { $(this).removeClass('selected'); }); 
-	property_setup();
-	
 }
 
 $().ready(function() { menubar_buttons(); } );

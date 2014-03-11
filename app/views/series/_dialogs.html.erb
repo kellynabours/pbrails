@@ -67,7 +67,44 @@
 	</div>
 </div>
 
+  <div id="dialog-newproduct" title="New Product">    
+	<div id="new_errors" class="color: red"></div>
+    	<div class="input"><label for="title">Title</label> <input name="newproduct_title" id="newproduct_title" value=""></div>
+  </div>
+
+
+
 <script>
+     	$("#dialog-newproduct").dialog( {
+                autoOpen: false,
+                width:400,
+                buttons: [
+                        {
+                                text: "Done",
+                                click: function() {
+                                        $(this).dialog('close');
+                                        $.ajax("/product/new", {
+                                                data: {
+                                                        product_title: $("#newproduct_title").val() ,
+                                                        series_id: $("#id").val()
+                                                } ,
+                                                error: function(jqXHR, textStatus, errorThrown) {
+                                                        $("#new_errors").html(jqXHR.responseText);
+                                                        $(this).dialog('open');
+                                                } ,
+                                                success: function(data,textStatus,jqXHR) {
+                                                        $("#new_errors").html("");
+                                                        $("#mainbody").html(data);
+                                                }
+                                        });
+                                }
+                        },
+                        { text:"Cancel", click: function() { $(this).dialog("close"); } }
+                ]
+        });
+        $("#product_new > img, #product_new > span").off("click" );
+        $("#product_new > img, #product_new > span").click( function() { $("#dialog-newproduct").dialog("open"); } );
+
 	$("#dialog-newterritory").dialog( {
                 autoOpen: false,
                 width:400,

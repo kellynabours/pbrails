@@ -42,7 +42,7 @@
 				datarows << [ r.id,  r.role, r.contact.first_name, r.contact.last_name, "<img src='/images/menu_delete.png' class='delete' width='16'>".html_safe() ]
 			end	
 		%>
-		<%= datatable(["Role","First Name", "Last Name",""], datarows, {:model=>"role",:table_id=>"roletable"} ) %>
+		<%= datatable(["Role","First Name", "Last Name",""], datarows, {:model=>"role",:table_id=>"roletable",:widths=>["130px","130px","130px","16px"]} ) %>
  		<div id="role_assign" class="add"> <img src="/images/menu_add.png"><span>Assign Existing Contact</span>
  			<div id="role_new" class="addmore"> <img src="/images/menu_add.png"><span>Add New Contact</span></div>
 		</div>
@@ -54,12 +54,15 @@
 	    <li><a href="#tabs-2"><em>Sales & Key Points</em></a></li>
 	  </ul>
 	  <div id="tabs-1">  
+		<div class="input onecolumn datatablerow">
 		<label for="isbntable">Products</label>
 		<% datarows=[]
 		   @series.products.each do |p|
 		   	datarows << [ p.id, p.isbn13, p.short_description ]
  		   end %> 
 		<%= datatable(["ISBN","Short description"],datarows, {:model=>"product",:table_id=>"isbntable"})%>
+		<div id="product_new" class="add"> <img src="/images/menu_add.png"><span>Add New Product</span></div>
+		</div>
 	  </div>
 	  <div id="tabs-2">  Sales and Key Points
 		<div class="input onecolumn">
@@ -114,7 +117,7 @@
 				datarows << [ r.id,  r.territory.name, "<img src='/images/menu_delete.png' class='delete' width='16'>".html_safe() ]
 			end	
 		%>
-		<%= datatable(["Territory","" ], datarows, {:model=>"series_territory",:table_id=>"territorytable"} ) %>
+		<%= datatable(["Territory","" ], datarows, {:model=>"series_territory",:table_id=>"territorytable",:widths=>["138px","16px"]} ) %>
  		<div id="territory_assign" class="add"> <img src="/images/menu_add.png"><span>Add Territory </span>
 		</div>
 	</div>
@@ -133,13 +136,11 @@
 
 
 
-<!-- UPDATE THE TAB BAR, since this is brought in by AJAX, dynamically alter the bar -->
-	<script>
-		$(function() { $("#tabs").tabs(); }); 
-  		$("#isbntable .dtbody .dttr").click(loadProductSearch);
-	</script>
-
 <script>
+	$(function() { $("#tabs").tabs(); }); 
+  	$("#isbntable .dtbody .dttr").click(loadProductSearch);
+	$("#roletable .dtbody .dttr").click(loadRolesSearch);
+
 function changeFormat() { 
 	format=$("#series_format_id").val();
 	$(".formattype").hide();
@@ -155,6 +156,7 @@ $("#tabsbar li").removeClass("selected");
 $("#tabsbar li.series").removeClass("greyed");
 $("#tabsbar li.series").addClass("selected");
 $("#tabsbar li.series a").off("click").click(function() { loadItem("series",<%=@series.id%>);});
+$("#tabsbar li.propery a").off("click").click(function() { loadItem("property",<%=@series.property_id%>);});
 setup_datatables();
 $("#series_delete").off("click").click(general_delete);
 $("#series_save").off("click").click(general_save);
@@ -166,15 +168,14 @@ changeFormat();
 <script>
 
 
-    $(document).ready(function() {
        if ($('textarea').length > 0) {       
          var data = $('textarea');
          $.each(data, function(i) {
 	   if (CKEDITOR.instances[data[i].id]) { delete CKEDITOR.instances[data[i].id]; } 
+	   CKEDITOR.config.customConfig='/ckeditor/ckeditor_config.js';
            CKEDITOR.replace(data[i].id);
          });     
        }  
-    });
 
 </script>
 

@@ -32,7 +32,7 @@
 			datarows << [ b.id,  b.genre.name, "<img src='/images/menu_delete.png' class='delete' width='16'>".html_safe() ]
 		  end	
 		%>
-                <%= datatable(["Genre","" ], datarows, {:model=>"series_genre"} ) %>
+                <%= datatable(["Genre","" ], datarows, {:model=>"series_genre",:widths=>["138px","16px"]} ) %>
                 <div id="genre_assign" class="add"> <img src="/images/menu_add.png"><span>Add Genre</span> </div>
 	</div>
 	<div class="input rcolumn datatablerow">
@@ -42,7 +42,7 @@
 			datarows << [ b.id,  b.bisac.description, "<img src='/images/menu_delete.png' class='delete' width='16'>".html_safe() ]
 		  end	
 		%>
-                <%= datatable(["Bisac Code","" ], datarows, {:model=>"series_bisac"} ) %>
+                <%= datatable(["Bisac Code","" ], datarows, {:model=>"series_bisac",:widths=>["138px","16px"]} ) %>
                 <div id="bisac_assign" class="add"> <img src="/images/menu_add.png"><span>Add Bisac Code</span> </div>
 	</div>
 	<div class="input rcolumn">

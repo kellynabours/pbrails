@@ -3,14 +3,11 @@
 		<li class="property"><a model_id="" href="#"><em>Property</em></a></li>
 		<li class="greyed series"><a model_id="" href="#"><em>Series</em></a></li>
 		<li class="greyed product"><a model_id="" href="#"><em>Products</em></a></li>
-		<li class="contacts"><a model_id="" href="#"><em>Contacts</em></a></li>
-		<li class="reports"><a model_id="" href="#"><em>Reports</em></a></li>
+		<li class="greyed contacts"><a model_id="" href="#"><em>Contacts</em></a></li>
+		<li class="quick"><a model_id="" href="#"><em>Quick Reports</em></a></li>
 </ul>
 </div>
 <script>
-	$("#tabsbar li.property a").click(function() { top.location.href="/property"; } );
-	$("#tabsbar li.contacts a").click(function() { top.location.href="/contacts"; } );
-	$("#tabsbar li.reports a").click(function() { top.location.href="/reports"; } );
-
+	$("#tabsbar li.quick a").click(function() { loadItem("quick",0);  } );
 </script>
 

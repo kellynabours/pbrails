@@ -163,5 +163,6 @@ ul.ui-tabs-nav li.ui-state-active.ui-state-hover { border: 1px solid rgb(38,71,1
 
 #right .datatable { width: 154px; } 
 
-
+.attach_menu { float:left; display:block; } 
+.attach_menu li { float:left; padding: 2px; list-style: none outside none;  } 
 

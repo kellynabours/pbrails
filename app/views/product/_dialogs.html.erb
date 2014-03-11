@@ -41,4 +41,47 @@
         $("#productterritory_assign > img, #productterritory_assign > span").off("click" );
         $("#productterritory_assign > img, #productterritory_assign > span").click( function() { $("#dialog-newproductterritory").dialog("open"); } );
 
+	$("#ProductAssignIsbn").off("click").click(function() { 
+		$.ajax("/product/assignisbn", {
+                	data: { product_id: $("#id").val(), } ,
+                	error: function(jqXHR, textStatus, errorThrown) { alert(jqXHR.responseText); } ,
+                	success: function(data,textStatus,jqXHR) { $("#product_isbn").val(data); }
+                });
+	});
+	$("#ProductAssignUpc").off("click").click(function() { 
+                $.ajax("/product/assignupc", {
+                	data: { product_id: $("#id").val(), } ,
+                	error: function(jqXHR, textStatus, errorThrown) { alert(jqXHR.responseText); } ,
+                	success: function(data,textStatus,jqXHR) { $("#product_upc").val(data); }
+                });
+	});
+	$("#ProductDownloadUpc").off("click").click(function() { 
+                $.ajax("/barcode/download", {
+                	data: { type: "upc", code:$("#product_upc").val() } ,
+                	error: function(jqXHR, textStatus, errorThrown) { alert(jqXHR.responseText); } ,
+                	success: function(data,textStatus,jqXHR) { }
+                });
+	});
+	$("#ProductDownloadUpcprice").off("click").click(function() { 
+                $.ajax("/barcode/download", {
+                	data: { type: "upcprice", code:$("#product_upc").val(), price: 0 } ,
+                	error: function(jqXHR, textStatus, errorThrown) { alert(jqXHR.responseText); } ,
+                	success: function(data,textStatus,jqXHR) { }
+                });
+	});
+	$("#ProductDownloadIsbn").off("click").click(function() { 
+                $.ajax("/barcode/download", {
+                	data: { type: "isbn", code:$("#product_upc").val() } ,
+                	error: function(jqXHR, textStatus, errorThrown) { alert(jqXHR.responseText); } ,
+                	success: function(data,textStatus,jqXHR) { }
+                });
+	});
+	$("#ProductDownloadIsbnprice").off("click").click(function() { 
+                $.ajax("/barcode/download", {
+                	data: { type: "isbnprice", code:$("#product_upc").val(), price: 0} ,
+                	error: function(jqXHR, textStatus, errorThrown) { alert(jqXHR.responseText); } ,
+                	success: function(data,textStatus,jqXHR) { }
+                });
+	});
+
 </script>

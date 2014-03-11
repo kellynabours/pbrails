@@ -2,7 +2,7 @@
 	<ul>
 		<li id="product_delete"  class="last"><img src="/images/menu_delete.png"><span>Delete</span></li>
 		<li id="product_changelog" ><img src="/images/menu_report.png"><span>Changelog</span></li>
-		<li id="products_save" ><img src="/images/menu_save.png"><span>Save</span></li>
+		<li id="product_save" ><img src="/images/menu_save.png"><span>Save</span></li>
 	</ul>
 </div>
 <div id="main">
@@ -40,7 +40,7 @@
 		<textarea id="product_print_extras" name="product[product_print_extras]"><%=@product.print_extras if !@product.nil?%></textarea>
 	</div>
 
-	<div id="tabs">
+	<div id="tabs" style="clear:both">
           	<ul>
 	            	<li><a href="#tabs-1"><em>Print Info</em></a></li>
        			<li><a href="#tabs-2"><em>Digital Publishing</em></a></li>
@@ -49,6 +49,11 @@
 			<div class="input twocolumn">
        		         <label for="product_isbn">ISBN</label>
        		         <input id="product_isbn" name="product[isbn]" value="<%=@product.isbn if !@product.nil?%>" disabled>
+			<ul class="attach_menu">
+			<li><input id="ProductAssignIsbn" type="button" style="width:80px" value="Assign ISBN" /></li>
+			<li><a id="ProductDownloadIsbn" href="#"><img src="/images/download.png"></a></li>
+			<li><a id="ProductDownloadIsbnprice" href="#"><img src="/images/download_price.png"></a></li>
+			</ul>
 			</div>
 			<div class="input twocolumn">
        		         <label for="product_isbn13">ISBN-13</label>
@@ -57,35 +62,42 @@
 			<div class="input twocolumn">
        		         <label for="product_upc">UPC</label>
        		         <input id="product_upc" name="product[upc]" value="<%=@product.upc if !@product.nil?%>" disabled>
+			<ul class="attach_menu">
+			<li><input id="ProductAssignUpc" type="button" style="width:80px" value="Assign UPC" /></li>
+			<li><a id="ProductDownloadUpc" href="#"><img src="/images/download.png"></a></li>
+			<li><a id="ProductDownloadUpcprice" href="#"><img src="/images/download_price.png"></a></li>
+			</ul>
 			</div>
 					<div class="input twocolumn">
        			         <label for="product_cat_code">Cat. Code</label>
        		         <input id="product_cat_code" name="product[cat_code]" value="<%=@product.cat_code if @product%>">
 			</div>
-			<div class="input twocolumn">
+			<div class="input twocolumn formattype formatPRINT">
        		         <label for="product_viz_ship_date">Printer Ship Date</label>
        		         <input id="product_viz_ship_date" name="product[date_viz_ship]" value="<%=@product.date_viz_ship if !@product.nil?%>">
        		         <label for="product_simon_ship_date">Simon Ship Date</label>
        		         <input id="product_simon_ship_date" name="product[date_ss]" value="<%=@product.date_ss if !@product.nil?%>">
 			</div>
-			<div class="input twocolumn">
+			<div class="input twocolumn formattype formatPRINT">
        		         <label for="product_diamond_ship_date">Diamond Ship Date</label>
        		         <input id="product_diamond_ship_date" name="product[date_diamond_ship]" value="<%=@product.date_diamond_ship if !@product.nil?%>">
        		         <label for="product_street_date">Street Date</label>
        		         <input id="product_street_date" name="product[date_street]" value="<%=@product.date_street if !@product.nil?%>">
+			<ul class="attach_menu"><li><img id="ProductDateStreetReset" src="/images/action_delete.png"></li></ul>
 			</div>
 		
-			<div class="input twocolumn">
+			<div class="input twocolumn formattype formatANIMATION">
        		         <label for="product_whv_order_due">WHV Order Due</label>
        		         <input id="product_whv_order_due" name="product[whv_order_due]" value="<%=@product.whv_order_due if !@product.nil?%>">
        		         <label for="product_whv_ship">WHV Ship</label>
        			         <input id="product_whv_ship" name="product[whv_ship]" value="<%=@product.whv_ship if !@product.nil?%>">
 			</div>
-			<div class="input twocolumn">
+			<div class="input twocolumn formattype formatANIMATION">
        		         <label for="product_whv_street_date">WHV Street Date</label>
        		         <input id="product_whv_street_date" name="product[whv_street_date]" value="<%=@product.whv_street_date if !@product.nil?%>">
+			<ul class="attach_menu"><li><img id="ProductDateWHVStreetReset" src="/images/action_delete.png"></li></ul>
 			</div>
-			<div class="input twocolumn">
+			<div class="input twocolumn formattype formatANIMATION">
        		         <label for="product_whv_FERT">WHV FERT</label>
        		         <input id="product_whv_FERT" name="product[whv_fert]" value="<%=@product.whv_fert if !@product.nil?%>">
        		         <label for="product_whv_vid_vers_num">WHV Vers Num </label>
@@ -127,10 +139,10 @@
                         # need to collect data to show.
                         datarows=[]
                         @product.product_territory.each do | r|
-                                datarows << [ r.id,  r.territory.name, "<img src='/images/menu_delete.png' class='delete' width='16'>".html_safe() ]
+                                datarows << [ r.id,  r.territory.name_abbrev, r.price, "<img src='/images/menu_delete.png' class='delete' width='16'>".html_safe() ]
                         end
                 %>
-                <%= datatable(["Territory","" ], datarows, {:model=>"product_territory",:table_id=>"productterritorytable"} ) %>
+                <%= datatable(["Territory","Price","" ], datarows, {:model=>"product_territory",:table_id=>"productterritorytable",:widths=>["80px","53px","16px"], :classes=>["","dteditable",""],:fields=>["","price",""]} ) %>
                 <div id="productterritory_assign" class="add"> <img src="/images/menu_add.png"><span>Add Territory </span>
                 </div>
         </div>
@@ -143,10 +155,7 @@
    
   <% end %>
 </div>
-
-
         <%= render :partial => "dialogs" %>
-
 
 <!-- UPDATE THE TAB BAR, since this is brought in by AJAX, dynamically alter the bar -->
 	<script>
@@ -170,6 +179,8 @@ $("#tabsbar li").removeClass("selected");
 $("#tabsbar li.product").removeClass("greyed");
 $("#tabsbar li.product").addClass("selected");
 $("#tabsbar li.product a").off("click").click(function() { loadItem("product",<%=@product.id%>);});
+$("#tabsbar li.series a").off("click").click(function() { loadItem("series",<%=@product.series_id%>);});
+$("#tabsbar li.property a").off("click").click(function() { loadItem("property",<%=@product.series.property_id%>);});
 setup_datatables();
 $("#product_delete").off("click").click(general_delete);
 $("#product_save").off("click").click(general_save);
@@ -197,18 +208,33 @@ $("#product_whv_street_date").datepicker({dateFormat:"yy-mm-dd",onSelect: functi
 	$("#product_whv_order_due").val(orderdue.getFullYear()+"-"+(orderdue.getMonth()+1)+"-"+orderdue.getDate());
 	$("#product_whv_ship").val(shipdate.getFullYear()+"-"+(shipdate.getMonth()+1)+"-"+shipdate.getDate());
 } } );
+function update_short_description(eventObject) {
+	$("#product_short_description").val($("#product_name").val()+", Vol. "+$("#product_volume_number").val());
+}
+$("#product_name").off("change").change(update_short_description);
+$("#product_volume_number").off("change").change(update_short_description);
+$("#ProductDateStreetReset").off("click").click( function() { 
+	$("#product_diamond_ship_date").val("");
+	$("#product_street_date").val("");
+	$("#product_simon_ship_date").val("");
+	$("#product_viz_ship_date").val("");
+});
+$("#ProductDateWHVStreetReset").off("click").click( function() { 
+	$("#product_whv_order_due").val("");
+	$("#product_whv_ship").val("");
+	$("#product_whv_street_date").val("");
+});
 /* **** */
 
 </script>
 
 <script>
-
-
     $(document).ready(function() {
        if ($('textarea').length > 0) {
          var data = $('textarea');
          $.each(data, function(i) {
  	   if (CKEDITOR.instances[data[i].id]) { delete CKEDITOR.instances[data[i].id]; }
+           CKEDITOR.config.customConfig='/ckeditor/ckeditor_config.js';
            CKEDITOR.replace(data[i].id);
          });
        }

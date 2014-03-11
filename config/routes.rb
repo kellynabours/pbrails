@@ -1,10 +1,8 @@
 Pb::Application.routes.draw do
 
-  get "user/login"
-
-  get "home/index"
   match "login" => "user#login"
   match "logout" => "user#logout" 
+  match "oauth2callback" => "user#create"
 
   match "/search" =>"search#search"
 
@@ -22,8 +20,13 @@ Pb::Application.routes.draw do
   match "/series_genre/delete"=>"series#delete_genre"
   match "/series_territory/delete"=>"series#delete_territory"
   match "/product_territory/delete"=>"product#delete_territory"
+  match "/product_territory/editfield"=>"product#edit_territory"
   match "/reports/:action"=>"reports"
   match "/reports/"=>"reports#index"
+  match "/contacts/:action"=>"contact"
+  match "/contacts/"=>"contact#index"
+  match "/quick/:action"=>"quick"
+  match "/quick/"=>"quick#index"
 
   root :to => "home#index"
 end

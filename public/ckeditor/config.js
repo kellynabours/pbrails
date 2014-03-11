@@ -5,23 +5,19 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 CKEDITOR.editorConfig = function( config )
 {
+	alert("in config.js in ckeditor");
 	// Define changes to default configuration here. For example:
 	// config.language = 'fr';
 	// config.uiColor = '#AADC6E';
-
-	config.toolbarGroups = [
-		{ name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
-		{ name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
-		{ name: 'editing', groups: [ 'find', 'selection', 'spellchecker' ] },
-		'/',
-		{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
-		{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
-		{ name: 'links' },
-		'/',
-		{ name: 'styles' },
-		{ name: 'colors' },
-		{ name: 'tools' },
-		{ name: 'others' },
-		{ name: 'about' }
+	config.width=500;
+	config.resize_minWidth=0;
+	config.resize_minHeight=0;
+	config.toolbar="Pb";
+	config.toolbar_Pb=
+	[
+    		{ name: 'document',    items : [ 'Source','-','Save','NewPage','DocProps','Preview','Print','-','Templates' ] },
+    		{ name: 'clipboard',   items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
 	];
+
+
 };

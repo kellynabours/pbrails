@@ -31,6 +31,12 @@ class RoleController < ApplicationController
 		render :nothing=>true
 	end
 
+        def form
+		r=Role.find_by_id(params[:id])
+		@contact=Contact.find_by_id(r.contact_id) 
+        	render :layout=>false
+	end
+
 end
 
 

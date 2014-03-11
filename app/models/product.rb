@@ -1,5 +1,5 @@
 class Product < ApplicationModel
-        set_table_name "pb_products"
+        set_table_name "z_products"
 	belongs_to :series
         has_many :product_territory
         has_many :territory, :through=>:product_territory
